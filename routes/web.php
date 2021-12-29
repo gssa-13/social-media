@@ -11,7 +11,13 @@ Route::get('/', function () {
 });
 
 
-Route::post('statuses', [StatusController::class, 'store'])->name('statuses.store')->middleware('auth');
+Route::post('/statuses', [StatusController::class, 'store'])
+    ->name('statuses.store')
+    ->middleware('auth');
+
+Route::get('/statuses', [StatusController::class, 'index'])
+    ->name('statuses.index');
+//    ->middleware('auth');
 
 Route::get('/login', [Auth::class, 'create'])->middleware('guest')->name('login');
 

@@ -15,7 +15,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        return Status::latest()->paginate();
     }
 
     /**
@@ -38,7 +38,6 @@ class StatusController extends Controller
     {
         $request->validate([
             'body' => ['required', 'min:5'],
-
         ]);
 
         $data = Status::create([
