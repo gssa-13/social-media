@@ -22,7 +22,7 @@ class CreateStatusTest extends TestCase
         // 2 When => Make a post request to status
         $response = $this->postJson(route('statuses.store'), ['body' => 'My first post']);
         $response->assertJson([
-            'body' => 'My first post'
+            'data' => ['body' => 'My first post']
         ]);
         // 3 Then => See a new status from database
         $this->assertDatabaseHas('statuses', [

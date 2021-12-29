@@ -12,7 +12,7 @@ class UsersCanSeeAllStatusesTest extends DuskTestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function users_can_see_statuses_on_home()
+    public function users_can_see_all_statuses_on_the_homepage()
     {
         $statuses = Status::factory()->count(5)->create();
 
@@ -21,7 +21,9 @@ class UsersCanSeeAllStatusesTest extends DuskTestCase
                 ->waitForText($statuses->first()->body);
 
             foreach ( $statuses as $status) {
-                $browser->assertSee($status->body);
+                $browser->assertSee($status->body)
+                        ->assertSee($status->user->name)
+                        ->assertSee($status->created_at->diffForHumans());
             }
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\StatusResource;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,9 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return Status::latest()->paginate();
+        return StatusResource::collection(
+            Status::latest()->paginate()
+        );
     }
 
     /**
@@ -45,9 +48,7 @@ class StatusController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return response()->json([
-            'body' => $data->body
-        ]);
+        return StatusResource::make($data);
     }
 
     /**
