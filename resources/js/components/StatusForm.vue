@@ -1,0 +1,42 @@
+<template>
+    <div>
+        <form @submit.prevent="submit()">
+            <div class="card-body">
+                <textarea v-model="body" class="form-control border-0 bg-light" name="body" id="body" placeholder="What's happening?"></textarea>
+            </div>
+            <div class="card-footer">
+                <button id="create-status" class="btn btn-primary">Publish</button>
+            </div>
+        </form>
+        <div v-for="status in statuses" v-text="status.body">
+
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            body: '',
+            statuses: []
+        }
+    },
+    methods: {
+        submit() {
+            axios.post('/statuses', {body: this.body})
+            .then(response => {
+                this.statuses.push(response.data);
+                this.body = '';
+            })
+            .catch(errors => {
+                console.log(errors.response.data);
+            });
+        }
+    }
+}
+</script>
+
+<style scoped>
+
+</style>
