@@ -29,7 +29,7 @@ class CreateCommentTest extends TestCase
         $this->assertDatabaseHas('comments', [
             'user_id' => $user->id,
             'status_id' => $status->id,
-            'body' => $comment['body']
+            'body' => 'My first comment'
         ]);
     }
 
