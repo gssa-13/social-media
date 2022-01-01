@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="redirectIfIsAGuest">
         <div class="card mb-3 border-0 shadow-sm" v-for="status in statuses">
             <div class="card-body d-flex flex-column">
                 <div class="d-flex align-items-center mb-3">
@@ -10,6 +10,30 @@
                     </div>
                 </div>
                 <p class="card-text text-secondary" v-text="status.body"></p>
+            </div>
+            <div class="card-footer p-2 d-flex justify-content-between align-items-center">
+                <button
+                    v-if="status.is_liked"
+                    dusk="unlike-btn"
+                    @click="unlike(status)"
+                    class="btn btn-link"
+                ><strong>
+                    <i class="fas fa-thumbs-up"></i>
+                    You Like
+                </strong></button>
+                <button
+                    v-else
+                    dusk="like-btn"
+                    @click="like(status)"
+                    class="btn btn-link"
+                >
+                    <i class="far fa-thumbs-up"></i>
+                    Like
+                </button>
+                <div class="text-secondary mr-2">
+                    <i class="far fa-thumbs-up"></i>
+                    <span dusk="likes-count">{{ status.likes_count }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -33,6 +57,28 @@ export default {
         EventBus.$on('status-created', status => {
             this.statuses.unshift(status);
         });
+    },
+    methods: {
+        like(status) {
+            axios.post(`/statuses/${status.id}/likes`)
+            .then(response => {
+                status.is_liked = true;
+                status.likes_count++;
+            })
+            .catch(errors => {
+                console.log(errors.data)
+            });
+        },
+        unlike(status) {
+            axios.delete(`/statuses/${status.id}/likes`)
+                .then(response => {
+                    status.is_liked = false;
+                    status.likes_count--;
+                })
+                .catch(errors => {
+                    console.log(errors.data)
+                });
+        }
     }
 }
 </script>

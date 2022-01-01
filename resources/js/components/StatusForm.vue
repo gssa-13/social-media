@@ -1,13 +1,20 @@
 <template>
     <div>
-        <form @submit.prevent="submit()">
+        <form @submit.prevent="submit()" v-if="userIsAuthenticated">
             <div class="card-body">
-                <textarea v-model="body" class="form-control border-0 bg-light" name="body" id="body" placeholder="What's happening?"></textarea>
+                <textarea v-model="body" class="form-control border-0 bg-light" name="body"
+                          id="body" :placeholder="`What's happening ${userAuthenticated.name} ?`"></textarea>
             </div>
             <div class="card-footer">
-                <button id="create-status" class="btn btn-primary">Publish</button>
+                <button id="create-status" class="btn btn-primary">
+                    Publish
+                    <i class="fab fa-telegram-plane ml-1"></i>
+                </button>
             </div>
         </form>
+        <div class="card-body" v-else>
+            You need <a href="/login">login</a> to post something
+        </div>
     </div>
 </template>
 

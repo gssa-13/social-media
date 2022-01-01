@@ -2078,6 +2078,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2130,6 +2137,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2147,6 +2178,24 @@ __webpack_require__.r(__webpack_exports__);
     EventBus.$on('status-created', function (status) {
       _this.statuses.unshift(status);
     });
+  },
+  methods: {
+    like: function like(status) {
+      axios.post("/statuses/".concat(status.id, "/likes")).then(function (response) {
+        status.is_liked = true;
+        status.likes_count++;
+      })["catch"](function (errors) {
+        console.log(errors.data);
+      });
+    },
+    unlike: function unlike(status) {
+      axios["delete"]("/statuses/".concat(status.id, "/likes")).then(function (response) {
+        status.is_liked = false;
+        status.likes_count--;
+      })["catch"](function (errors) {
+        console.log(errors.data);
+      });
+    }
   }
 });
 
@@ -2160,14 +2209,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mixins/auth */ "./resources/js/mixins/auth.js");
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_auth__WEBPACK_IMPORTED_MODULE_0__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
-window.EventBus = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]();
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('status-form', (__webpack_require__(/*! ./components/StatusForm.vue */ "./resources/js/components/StatusForm.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('status-list', (__webpack_require__(/*! ./components/StatusList.vue */ "./resources/js/components/StatusList.vue")["default"]));
-var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({}).$mount('#app');
+
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].mixin((_mixins_auth__WEBPACK_IMPORTED_MODULE_0___default()));
+window.EventBus = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]();
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('status-form', (__webpack_require__(/*! ./components/StatusForm.vue */ "./resources/js/components/StatusForm.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('status-list', (__webpack_require__(/*! ./components/StatusList.vue */ "./resources/js/components/StatusList.vue")["default"]));
+var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({}).$mount('#app');
 
 /***/ }),
 
@@ -2199,6 +2252,36 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/mixins/auth.js":
+/*!*************************************!*\
+  !*** ./resources/js/mixins/auth.js ***!
+  \*************************************/
+/***/ ((module) => {
+
+var user = document.head.querySelector('meta[name="user"]');
+module.exports = {
+  computed: {
+    userAuthenticated: function userAuthenticated() {
+      return JSON.parse(user.content);
+    },
+    userIsAuthenticated: function userIsAuthenticated() {
+      return !!user.content;
+    },
+    isAGuest: function isAGuest() {
+      return !this.userIsAuthenticated;
+    }
+  },
+  methods: {
+    redirectIfIsAGuest: function redirectIfIsAGuest() {
+      if (this.isAGuest) {
+        return window.location.href = '/login';
+      }
+    }
+  }
+};
 
 /***/ }),
 
@@ -19782,48 +19865,55 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function ($event) {
-            $event.preventDefault()
-            return _vm.submit()
-          },
-        },
-      },
-      [
-        _c("div", { staticClass: "card-body" }, [
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.body,
-                expression: "body",
-              },
-            ],
-            staticClass: "form-control border-0 bg-light",
-            attrs: {
-              name: "body",
-              id: "body",
-              placeholder: "What's happening?",
-            },
-            domProps: { value: _vm.body },
+    _vm.userIsAuthenticated
+      ? _c(
+          "form",
+          {
             on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.body = $event.target.value
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.submit()
               },
             },
-          }),
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.body,
+                    expression: "body",
+                  },
+                ],
+                staticClass: "form-control border-0 bg-light",
+                attrs: {
+                  name: "body",
+                  id: "body",
+                  placeholder:
+                    "What's happening " + _vm.userAuthenticated.name + " ?",
+                },
+                domProps: { value: _vm.body },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.body = $event.target.value
+                  },
+                },
+              }),
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+          ]
+        )
+      : _c("div", { staticClass: "card-body" }, [
+          _vm._v("\n        You need "),
+          _c("a", { attrs: { href: "/login" } }, [_vm._v("login")]),
+          _vm._v(" to post something\n    "),
         ]),
-        _vm._v(" "),
-        _vm._m(0),
-      ]
-    ),
   ])
 }
 var staticRenderFns = [
@@ -19835,7 +19925,10 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { id: "create-status" } },
-        [_vm._v("Publish")]
+        [
+          _vm._v("\n                Publish\n                "),
+          _c("i", { staticClass: "fab fa-telegram-plane ml-1" }),
+        ]
       ),
     ])
   },
@@ -19864,6 +19957,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { on: { click: _vm.redirectIfIsAGuest } },
     _vm._l(_vm.statuses, function (status) {
       return _c("div", { staticClass: "card mb-3 border-0 shadow-sm" }, [
         _c("div", { staticClass: "card-body d-flex flex-column" }, [
@@ -19895,12 +19989,70 @@ var render = function () {
             domProps: { textContent: _vm._s(status.body) },
           }),
         ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "card-footer p-2 d-flex justify-content-between align-items-center",
+          },
+          [
+            status.is_liked
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-link",
+                    attrs: { dusk: "unlike-btn" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.unlike(status)
+                      },
+                    },
+                  },
+                  [_vm._m(0, true)]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-link",
+                    attrs: { dusk: "like-btn" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.like(status)
+                      },
+                    },
+                  },
+                  [
+                    _c("i", { staticClass: "far fa-thumbs-up" }),
+                    _vm._v("\n                Like\n            "),
+                  ]
+                ),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-secondary mr-2" }, [
+              _c("i", { staticClass: "far fa-thumbs-up" }),
+              _vm._v(" "),
+              _c("span", { attrs: { dusk: "likes-count" } }, [
+                _vm._v(_vm._s(status.likes_count)),
+              ]),
+            ]),
+          ]
+        ),
       ])
     }),
     0
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("strong", [
+      _c("i", { staticClass: "fas fa-thumbs-up" }),
+      _vm._v("\n                You Like\n            "),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -32137,6 +32289,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	
