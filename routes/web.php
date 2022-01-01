@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StatusLikeController;
+use App\Http\Controllers\StatusCommentsController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController as Auth;
 
@@ -13,25 +14,28 @@ Route::get('/', function () {
 
 
 Route::post('/statuses', [StatusController::class, 'store'])
-    ->name('statuses.store')
-    ->middleware('auth');
+    ->name('statuses.store')->middleware('auth');
 
 Route::get('/statuses', [StatusController::class, 'index'])
     ->name('statuses.index');
-//    ->middleware('auth');
 
 // route for likes \\
 Route::post('/statuses/{status}/likes', [StatusLikeController::class, 'store'])
-    ->name('statuses.like.store')
-    ->middleware('auth');
+    ->name('statuses.like.store')->middleware('auth');
 
 Route::delete('/statuses/{status}/likes', [StatusLikeController::class, 'destroy'])
-    ->name('statuses.like.destroy')
-    ->middleware('auth');
+    ->name('statuses.like.destroy')->middleware('auth');
 // route for likes \\
 
-Route::get('/login', [Auth::class, 'create'])->middleware('guest')->name('login');
+// route for comments \\
+Route::post('/statuses/{status}/comments', [StatusCommentsController::class, 'store'])
+    ->name('statuses.comment.store')->middleware('auth');
+// route for comments \\
 
+
+/// login \\\
+Route::get('/login', [Auth::class, 'create'])->middleware('guest')->name('login');
 Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login')
     ->middleware('guest');
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+/// login \\\
