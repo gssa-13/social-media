@@ -21,7 +21,8 @@ class StatusResource extends JsonResource
             'user_avatar' => 'https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
             'ago' => $this->created_at->diffForHumans(),
             'is_liked' => $this->isLiked(),
-            'likes_count' => $this->likesCount()
+            'likes_count' => $this->likesCount(),
+            'comments' => CommentResource::collection( $this->comments )
         );
     }
 }

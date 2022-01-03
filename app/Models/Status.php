@@ -43,4 +43,9 @@ class Status extends Model
     {
         return $this->likes()->count();
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

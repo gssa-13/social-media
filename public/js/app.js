@@ -2248,12 +2248,60 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     status: {
       type: Object,
       required: true
+    }
+  },
+  data: function data() {
+    return {
+      newComment: '',
+      comments: this.status.comments
+    };
+  },
+  methods: {
+    addNewComment: function addNewComment() {
+      var _this = this;
+
+      axios.post("/statuses/".concat(this.status.id, "/comments"), {
+        body: this.newComment
+      }).then(function (response) {
+        _this.comments.push(response.data.data);
+
+        _this.newComment = '';
+      })["catch"](function (errors) {
+        console.log(errors.data);
+      });
     }
   },
   components: {
@@ -20307,9 +20355,111 @@ var render = function () {
       ],
       1
     ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-footer" },
+      [
+        _vm._l(_vm.comments, function (comment) {
+          return _c("div", { staticClass: "mb-2" }, [
+            _c("img", {
+              staticClass: "rounded shadow-sm float-left mr-2",
+              attrs: {
+                width: "30px",
+                src: comment.user_avatar,
+                alt: comment.user_name,
+              },
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "card border-0 shadow-sm" }, [
+              _c("div", { staticClass: "card-body p-2 text-secondary" }, [
+                _c("a", { attrs: { href: "javascript:void(0);" } }, [
+                  _vm._v(_vm._s(comment.user_name)),
+                ]),
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(comment.body) +
+                    "\n                "
+                ),
+              ]),
+            ]),
+          ])
+        }),
+        _vm._v(" "),
+        _vm.userIsAuthenticated
+          ? _c(
+              "form",
+              {
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.addNewComment()
+                  },
+                },
+              },
+              [
+                _c("div", { staticClass: "d-flex align-items-center" }, [
+                  _c("img", {
+                    staticClass: "rounded shadow-sm mr-2",
+                    attrs: {
+                      width: "30px",
+                      src: "https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                      alt: "currentUser.name",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newComment,
+                          expression: "newComment",
+                        },
+                      ],
+                      staticClass: "form-control border-0 shadow-sm",
+                      attrs: {
+                        name: "comment",
+                        placeholder: "Write a comment",
+                        rows: "1",
+                      },
+                      domProps: { value: _vm.newComment },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.newComment = $event.target.value
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _vm._m(0),
+                  ]),
+                ]),
+              ]
+            )
+          : _vm._e(),
+      ],
+      2
+    ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-append" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { dusk: "comment-btn" } },
+        [_vm._v("Send")]
+      ),
+    ])
+  },
+]
 render._withStripped = true
 
 
