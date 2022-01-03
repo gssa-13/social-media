@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StatusLikeController;
+use App\Http\Controllers\CommentLikesController;
 use App\Http\Controllers\StatusCommentsController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController as Auth;
@@ -31,6 +32,17 @@ Route::delete('/statuses/{status}/likes', [StatusLikeController::class, 'destroy
 Route::post('/statuses/{status}/comments', [StatusCommentsController::class, 'store'])
     ->name('statuses.comment.store')->middleware('auth');
 // route for comments \\
+
+// route for like comments \\
+
+Route::post('/comments/{comment}/likes', [CommentLikesController::class, 'store'])
+    ->name('comments.like.store')->middleware('auth');
+
+Route::delete('/comments/{comment}/likes', [CommentLikesController::class, 'destroy'])
+    ->name('comments.like.destroy')->middleware('auth');
+// route for like comments \\
+
+
 
 
 /// login \\\

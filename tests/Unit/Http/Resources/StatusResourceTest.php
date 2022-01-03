@@ -19,6 +19,7 @@ class StatusResourceTest extends TestCase
         $comments = Comment::factory()->create([ 'status_id' => $status->id ]);
 
         $statusResource = StatusResource::make($status)->resolve();
+
         $this->assertEquals($status->id, $statusResource['id']);
         $this->assertEquals($status->body, $statusResource['body']);
         $this->assertEquals($status->user->name, $statusResource['user_name']);
