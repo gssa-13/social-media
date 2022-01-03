@@ -39,6 +39,9 @@ class StatusCommentsController extends Controller
      */
     public function store(Status $status, Request $request)
     {
+        $request->validate([
+            'body' => ['required']
+        ]);
         $comment = Comment::create([
             'user_id' => Auth::id(),
             'status_id' => $status->id,

@@ -36,7 +36,7 @@ export default {
                     status.likes_count++;
                 })
                 .catch(errors => {
-                    console.log(errors.data)
+                    console.log(errors.response.data)
                 });
         },
         unlike(status) {
@@ -46,7 +46,7 @@ export default {
                     status.likes_count--;
                 })
                 .catch(errors => {
-                    console.log(errors.data)
+                    console.log(errors.response.data)
                 });
         }
     }

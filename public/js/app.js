@@ -2099,7 +2099,7 @@ __webpack_require__.r(__webpack_exports__);
         status.is_liked = true;
         status.likes_count++;
       })["catch"](function (errors) {
-        console.log(errors.data);
+        console.log(errors.response.data);
       });
     },
     unlike: function unlike(status) {
@@ -2107,7 +2107,7 @@ __webpack_require__.r(__webpack_exports__);
         status.is_liked = false;
         status.likes_count--;
       })["catch"](function (errors) {
-        console.log(errors.data);
+        console.log(errors.response.data);
       });
     }
   }
@@ -2126,6 +2126,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -2300,7 +2302,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.newComment = '';
       })["catch"](function (errors) {
-        console.log(errors.data);
+        console.log(errors.response.data);
       });
     }
   },
@@ -20208,6 +20210,7 @@ var render = function () {
                   id: "body",
                   placeholder:
                     "What's happening " + _vm.userAuthenticated.name + " ?",
+                  required: "",
                 },
                 domProps: { value: _vm.body },
                 on: {
@@ -20423,6 +20426,7 @@ var render = function () {
                         name: "comment",
                         placeholder: "Write a comment",
                         rows: "1",
+                        required: "",
                       },
                       domProps: { value: _vm.newComment },
                       on: {

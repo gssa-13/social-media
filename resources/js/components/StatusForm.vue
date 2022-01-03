@@ -3,7 +3,9 @@
         <form @submit.prevent="submit()" v-if="userIsAuthenticated">
             <div class="card-body">
                 <textarea v-model="body" class="form-control border-0 bg-light" name="body"
-                          id="body" :placeholder="`What's happening ${userAuthenticated.name} ?`"></textarea>
+                          id="body" :placeholder="`What's happening ${userAuthenticated.name} ?`"
+                          required
+                ></textarea>
             </div>
             <div class="card-footer">
                 <button id="create-status" class="btn btn-primary">

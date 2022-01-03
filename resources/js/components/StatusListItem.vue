@@ -35,7 +35,7 @@
                     <div class="input-group">
                         <textarea
                             v-model="newComment" name="comment" class="form-control border-0 shadow-sm"
-                            placeholder="Write a comment" rows="1"
+                            placeholder="Write a comment" rows="1" required
                         ></textarea>
                         <div class="input-group-append">
                             <button dusk="comment-btn" class="btn btn-primary">Send</button>
@@ -71,7 +71,7 @@ export default {
                 this.newComment = '';
             })
             .catch(errors => {
-                console.log(errors.data)
+                console.log(errors.response.data)
             });
         }
     },
