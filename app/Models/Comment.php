@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\HasLikes;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory, HasLikes;
 
     protected $guarded = [];
 
@@ -22,25 +23,4 @@ class Comment extends Model
         return $this->morphMany(Like::class, 'likeable');
     }
 
-    public function like()
-    {
-        $this->likes()->firstOrCreate([
-            'user_id' => Auth::id()
-        ]);
-    }
-
-    public function unlike()
-    {
-        $this->likes()->where([ 'user_id' => Auth::id() ])->delete();
-    }
-
-    public function isLiked()
-    {
-        return $this->likes()->where('user_id', Auth::id() )->exists();
-    }
-
-    public function likesCount()
-    {
-        return $this->likes()->count();
-    }
 }
