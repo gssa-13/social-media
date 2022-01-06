@@ -17,12 +17,16 @@ class CommentResourceTest extends TestCase
         $comment = Status::factory()->create();
 
         $commentResource = CommentResource::make($comment)->resolve();
+
+        $this->assertEquals($comment->id, $commentResource['id']);
         $this->assertEquals($comment->body, $commentResource['body']);
         $this->assertEquals($comment->user->name, $commentResource['user_name']);
         $this->assertEquals(
             'https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
             $commentResource['user_avatar']
         );
+        $this->assertEquals(0, $commentResource['likes_count']);
+        $this->assertEquals(false, $commentResource['is_liked']);
 
     }
 }

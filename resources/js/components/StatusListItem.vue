@@ -11,7 +11,9 @@
             <p class="card-text text-secondary" v-text="status.body"></p>
         </div>
         <div class="card-footer p-2 d-flex justify-content-between align-items-center">
-            <like-button :status="status"/>
+            <like-button dusk="like-btn"
+                :model="status" :url="`/statuses/${status.id}/likes`"
+            />
             <div class="text-secondary mr-2">
                 <i class="far fa-thumbs-up"></i>
                 <span dusk="likes-count">{{ status.likes_count }}</span>
@@ -19,11 +21,23 @@
         </div>
         <div class="card-footer">
             <div v-for="comment in comments" class="mb-2">
-                <img width="30px" class="rounded shadow-sm float-left mr-2" :src="comment.user_avatar" :alt="comment.user_name">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-2 text-secondary">
-                        <a href="javascript:void(0);">{{ comment.user_name }}</a>
-                        {{ comment.body }}
+                <div class="d-flex">
+                    <img width="30px" height="30px" class="rounded shadow-sm mr-2" :src="comment.user_avatar" :alt="comment.user_name">
+                    <div class="flex-grow-1">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body p-2 text-secondary">
+                                <a href="javascript:void(0);">{{ comment.user_name }}</a>
+                                {{ comment.body }}
+                            </div>
+                        </div>
+                        <small class="float-right badge badge-primary py-1 px-2 mt-1" dusk="comment-likes-count">
+                            <i class="fas fa-thumbs-up mr-1"></i>
+                            {{ comment.likes_count }}
+                        </small>
+                        <like-button dusk="comment-like-btn"
+                             :model="comment" :url="`/comments/${comment.id}/likes`"
+                             class="comment-like-btn"
+                        />
                     </div>
                 </div>
             </div>
