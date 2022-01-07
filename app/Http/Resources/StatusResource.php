@@ -17,12 +17,11 @@ class StatusResource extends JsonResource
         return array(
             'id' => $this->id,
             'body' => $this->body,
-            'user_name' => $this->user->name,
-            'user_avatar' => 'https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+            'user' => UserResource::make($this->user),
             'ago' => $this->created_at->diffForHumans(),
             'is_liked' => $this->isLiked(),
             'likes_count' => $this->likesCount(),
-            'comments' => CommentResource::collection( $this->comments )
+            'comments' => CommentResource::collection( $this->comments ),
         );
     }
 }

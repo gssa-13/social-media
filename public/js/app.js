@@ -2295,6 +2295,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -20735,16 +20740,18 @@ var render = function () {
           staticClass: "rounded-circle mr-3 shadow-sm",
           attrs: {
             width: "40px",
-            src: "https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-            alt: "",
+            src: _vm.status.user.avatar,
+            alt: _vm.status.user.name,
           },
         }),
         _vm._v(" "),
         _c("div", [
-          _c("h5", {
-            staticClass: "mb-1",
-            domProps: { textContent: _vm._s(_vm.status.user_name) },
-          }),
+          _c("h5", { staticClass: "mb-1" }, [
+            _c("a", {
+              attrs: { href: _vm.status.user.link },
+              domProps: { textContent: _vm._s(_vm.status.user.name) },
+            }),
+          ]),
           _vm._v(" "),
           _c("div", {
             staticClass: "small text-muted",
@@ -20797,8 +20804,8 @@ var render = function () {
                 attrs: {
                   width: "30px",
                   height: "30px",
-                  src: comment.user_avatar,
-                  alt: comment.user_name,
+                  src: comment.user.avatar,
+                  alt: comment.user.name,
                 },
               }),
               _vm._v(" "),
@@ -20808,8 +20815,8 @@ var render = function () {
                 [
                   _c("div", { staticClass: "card border-0 shadow-sm" }, [
                     _c("div", { staticClass: "card-body p-2 text-secondary" }, [
-                      _c("a", { attrs: { href: "javascript:void(0);" } }, [
-                        _vm._v(_vm._s(comment.user_name)),
+                      _c("a", { attrs: { href: comment.user.link } }, [
+                        _vm._v(_vm._s(comment.user.name)),
                       ]),
                       _vm._v(
                         "\n                            " +
@@ -20868,8 +20875,8 @@ var render = function () {
                     staticClass: "rounded shadow-sm mr-2",
                     attrs: {
                       width: "30px",
-                      src: "https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                      alt: "currentUser.name",
+                      src: _vm.userAuthenticated.avatar,
+                      alt: _vm.userAuthenticated.name,
                     },
                   }),
                   _vm._v(" "),

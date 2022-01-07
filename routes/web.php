@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StatusLikeController;
 use App\Http\Controllers\CommentLikesController;
@@ -41,6 +42,10 @@ Route::post('/comments/{comment}/likes', [CommentLikesController::class, 'store'
 Route::delete('/comments/{comment}/likes', [CommentLikesController::class, 'destroy'])
     ->name('comments.like.destroy')->middleware('auth');
 // route for like comments \\
+
+// route for Users \\
+Route::get('@{user}', [UserController::class, 'show'])->name('users.show');
+// route for Users \\
 
 
 
