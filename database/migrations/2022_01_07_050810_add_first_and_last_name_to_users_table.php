@@ -27,8 +27,8 @@ class AddFirstAndLastNameToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $this->dropColumn('first_name');
-            $this->dropColumn('last_name');
+            $table->dropColumn('first_name');
+            $table->dropColumn('last_name');
         });
     }
 }

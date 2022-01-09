@@ -9,6 +9,7 @@ use App\Http\Controllers\CommentLikesController;
 use App\Http\Controllers\StatusCommentsController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController as Auth;
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,4 +56,6 @@ Route::get('/login', [Auth::class, 'create'])->middleware('guest')->name('login'
 Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login')
     ->middleware('guest');
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 /// login \\\
