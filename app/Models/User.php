@@ -29,6 +29,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = ['avatar'];
+
     /**
      * The attributes that should be cast.
      *
@@ -51,5 +53,10 @@ class User extends Authenticatable
     public function avatar()
     {
         return 'https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
+    }
+
+    public function getAvatarAttribute()
+    {
+        return $this->avatar();
     }
 }

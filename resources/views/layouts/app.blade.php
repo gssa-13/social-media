@@ -31,13 +31,16 @@
                         <li class="nav-item">
                             <a href="{{ route('login') }}" class="nav-link">Login</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="nav-link">Register</a>
+                        </li>
                     @else
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                                 {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="{{ route('users.show', Auth::user()) }}">Profile</a></li>
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="javascript:void(0);"

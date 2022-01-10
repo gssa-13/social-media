@@ -35,6 +35,11 @@ class UserTest extends TestCase
             'https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
             $user->avatar()
         );
+
+        $this->assertEquals(
+            'https://images.pexels.com/photos/3118694/pexels-photo-3118694.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+            $user->avatar
+        );
     }
 
 }
