@@ -3,7 +3,7 @@
         <div class="card-body d-flex flex-column">
             <div class="d-flex align-items-center mb-3">
                 <img class="rounded-circle mr-3 shadow-sm" width="40px"
-                     :src="status.user.avatar"
+                     :src="status.user.user_avatar"
                      :alt="status.user.name">
                 <div>
                     <h5 class="mb-1">
@@ -26,7 +26,7 @@
         <div class="card-footer">
             <div v-for="comment in comments" class="mb-2">
                 <div class="d-flex">
-                    <img width="30px" height="30px" class="rounded shadow-sm mr-2" :src="comment.user.avatar" :alt="comment.user.name">
+                    <img width="30px" height="30px" class="rounded shadow-sm mr-2" :src="comment.user.user_avatar" :alt="comment.user.name">
                     <div class="flex-grow-1">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body p-2 text-secondary">

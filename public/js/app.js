@@ -2199,6 +2199,9 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     StatusListItem: _StatusListItem__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: {
+    url: String
+  },
   data: function data() {
     return {
       statuses: []
@@ -2207,7 +2210,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/statuses').then(function (response) {
+    axios.get(this.getUrl).then(function (response) {
       _this.statuses = response.data.data;
     })["catch"](function (errors) {
       console.log(errors.response.data);
@@ -2215,6 +2218,11 @@ __webpack_require__.r(__webpack_exports__);
     EventBus.$on('status-created', function (status) {
       _this.statuses.unshift(status);
     });
+  },
+  computed: {
+    getUrl: function getUrl() {
+      return this.url ? this.url : 'statuses';
+    }
   }
 });
 
@@ -20740,7 +20748,7 @@ var render = function () {
           staticClass: "rounded-circle mr-3 shadow-sm",
           attrs: {
             width: "40px",
-            src: _vm.status.user.avatar,
+            src: _vm.status.user.user_avatar,
             alt: _vm.status.user.name,
           },
         }),
@@ -20804,7 +20812,7 @@ var render = function () {
                 attrs: {
                   width: "30px",
                   height: "30px",
-                  src: comment.user.avatar,
+                  src: comment.user.user_avatar,
                   alt: comment.user.name,
                 },
               }),

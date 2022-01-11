@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StatusLikeController;
+use App\Http\Controllers\UserStatusController;
+use App\Http\Controllers\FriendshipsController;
 use App\Http\Controllers\CommentLikesController;
 use App\Http\Controllers\StatusCommentsController;
+use App\Http\Controllers\AcceptFriendshipsController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController as Auth;
 use App\Http\Controllers\Auth\RegisterController;
@@ -46,7 +49,15 @@ Route::delete('/comments/{comment}/likes', [CommentLikesController::class, 'dest
 
 // route for Users \\
 Route::get('@{user}', [UserController::class, 'show'])->name('users.show');
+Route::get('users/{user}/statuses', [UserStatusController::class, 'index'])->name('users.statuses.index');
 // route for Users \\
+
+// route for Friendships \\
+Route::post('/friendships/{recipient}', [FriendshipsController::class, 'store'])->name('friendships.store')->middleware('auth');
+Route::delete('/friendships/{recipient}', [FriendshipsController::class, 'destroy'])->name('friendships.destroy')->middleware('auth');
+Route::post('/accept-friendships/{sender}', [AcceptFriendshipsController::class, 'store'])->name('accept-friendships.store')->middleware('auth');
+Route::delete('/accept-friendships/{sender}', [AcceptFriendshipsController::class, 'destroy'])->name('accept-friendships.destroy')->middleware('auth');
+// route for Friendships \\
 
 
 
