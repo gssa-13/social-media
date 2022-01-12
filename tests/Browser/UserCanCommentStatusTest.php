@@ -38,7 +38,7 @@ class UserCanCommentStatusTest extends DuskTestCase
         $comments = Comment::factory()->count(3)->create([ 'status_id' => $status->id ]);
 
         $this->browse(function (Browser $browser) use ($status, $comments){
-            $browser->visit('/')->waitForText($status->body);
+            $browser->visit('/')->waitForText($status->body, 7);
                 foreach ($comments as $comment) {
                     $browser->assertSee($comment->first()->body)
                         ->assertSee($comment->user->name)

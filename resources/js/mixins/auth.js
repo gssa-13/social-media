@@ -9,7 +9,7 @@ module.exports = {
             return !! user.content;
         },
         isAGuest() {
-            return ! this.userIsAuthenticated;
+            return !this.userIsAuthenticated;
         }
     },
     methods: {

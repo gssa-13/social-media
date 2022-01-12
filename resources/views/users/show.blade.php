@@ -8,6 +8,10 @@
                     <img src="{{ $user->avatar }}" alt="{{ $user->name }}">
                     <div class="card-body">
                         <div class="card-title">{{ $user->name  }}</div>
+                        <request-friendship-btn
+                            dusk="request-friendship"
+                            friendship-status="{{ $friendshipStatus }}"
+                            :recipient="{{ $user }}"/>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,10 @@ class AcceptFriendshipsController extends Controller
      */
     public function index()
     {
-        //
+        $friendshipRequests = Friendship::with('sender')
+            ->where('recipient_id', Auth::id())->get();
+
+        return view('friendships.index', compact('friendshipRequests'));
     }
 
     /**
@@ -40,7 +43,11 @@ class AcceptFriendshipsController extends Controller
         Friendship::where([
             'sender_id' => $sender->id,
             'recipient_id' =>  Auth::id(),
-        ])->update([ 'status' => 1 ]); // 1: Accepted
+        ])->update([ 'status' => 'accepted' ]);
+
+        return response()->json([
+            'friendship_status' => 'accepted'
+        ]);
     }
 
     /**
@@ -88,6 +95,10 @@ class AcceptFriendshipsController extends Controller
         Friendship::where([
             'sender_id' => $sender->id,
             'recipient_id' =>  Auth::id(),
-        ])->update([ 'status' => 0 ]); // 1: Accepted
+        ])->update([ 'status' => 'denied' ]);
+
+        return response()->json([
+            'friendship_status' => 'denied'
+        ]);
     }
 }

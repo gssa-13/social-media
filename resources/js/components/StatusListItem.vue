@@ -4,10 +4,10 @@
             <div class="d-flex align-items-center mb-3">
                 <img class="rounded-circle mr-3 shadow-sm" width="40px"
                      :src="status.user.user_avatar"
-                     :alt="status.user.name">
+                     :alt="status.user.user_name">
                 <div>
                     <h5 class="mb-1">
-                        <a :href="status.user.link" v-text="status.user.name"></a>
+                        <a :href="status.user.user_link" v-text="status.user.user_name"></a>
                     </h5>
                     <div class="small text-muted" v-text="status.ago"></div>
                 </div>

@@ -19,3 +19,7 @@ mix.browserSync({
     proxy: 'http://localhost/',
     open: false
 });
+
+if (mix.inProduction()) {
+    mix.version();
+}

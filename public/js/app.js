@@ -2054,6 +2054,84 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AcceptFriendshipBtn.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AcceptFriendshipBtn.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    sender: {
+      type: Object,
+      required: true
+    },
+    friendshipStatus: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      localFriendshipStatus: this.friendshipStatus
+    };
+  },
+  methods: {
+    acceptFriendshipRequest: function acceptFriendshipRequest() {
+      var _this = this;
+
+      axios.post("/accept-friendships/".concat(this.sender.name)).then(function (res) {
+        _this.localFriendshipStatus = res.data.friendship_status;
+      })["catch"](function (err) {
+        console.log(err.response.data);
+      });
+    },
+    denyFriendshipRequest: function denyFriendshipRequest() {
+      var _this2 = this;
+
+      axios["delete"]("/accept-friendships/".concat(this.sender.name)).then(function (res) {
+        _this2.localFriendshipStatus = res.data.friendship_status;
+      })["catch"](function (err) {
+        console.log(err.response.data);
+      });
+    },
+    deleteFriendship: function deleteFriendship() {
+      var _this3 = this;
+
+      axios["delete"]("/friendships/".concat(this.sender.name)).then(function (res) {
+        _this3.localFriendshipStatus = res.data.friendship_status;
+      })["catch"](function (err) {
+        console.log(err.response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LikeButton.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LikeButton.vue?vue&type=script&lang=js& ***!
@@ -2112,7 +2190,82 @@ __webpack_require__.r(__webpack_exports__);
       return [this.model.is_liked ? 'font-weight-bold' : '', 'btn btn-link '];
     },
     getIconClasses: function getIconClasses() {
-      return [this.model.is_liked ? 'fas ' : 'far ', 'fa-thumbs-up mr-1'];
+      return [this.model.is_liked ? 'fas' : 'far', ' fa-thumbs-up mr-1'];
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestFriendshipBtn.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestFriendshipBtn.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    recipient: {
+      type: Object,
+      required: true
+    },
+    friendshipStatus: {
+      type: String,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      localFriendshipStatus: this.friendshipStatus
+    };
+  },
+  methods: {
+    toggleFriendshipRequest: function toggleFriendshipRequest() {
+      var _this = this;
+
+      var method = this.getMethod();
+      axios[method]("/friendships/".concat(this.recipient.name)).then(function (response) {
+        _this.localFriendshipStatus = response.data.friendship_status;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    getMethod: function getMethod() {
+      if (this.localFriendshipStatus === 'pending' || this.localFriendshipStatus === 'accepted') {
+        return 'delete';
+      }
+
+      return 'post';
+    }
+  },
+  computed: {
+    getText: function getText() {
+      if (this.localFriendshipStatus === 'pending') {
+        return 'Cancel request';
+      }
+
+      if (this.localFriendshipStatus === 'accepted') {
+        return 'Remove from my friends';
+      }
+
+      if (this.localFriendshipStatus === 'denied') {
+        return 'Request denied';
+      }
+
+      return 'Send friend request';
     }
   }
 });
@@ -2363,6 +2516,8 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].mixin((_mixins_auth__WEBPACK_IMPORTE
 window.EventBus = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]();
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('status-form', (__webpack_require__(/*! ./components/StatusForm.vue */ "./resources/js/components/StatusForm.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('status-list', (__webpack_require__(/*! ./components/StatusList.vue */ "./resources/js/components/StatusList.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('request-friendship-btn', (__webpack_require__(/*! ./components/RequestFriendshipBtn */ "./resources/js/components/RequestFriendshipBtn.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('accept-friendship-btn', (__webpack_require__(/*! ./components/AcceptFriendshipBtn */ "./resources/js/components/AcceptFriendshipBtn.vue")["default"]));
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({}).$mount('#app');
 
 /***/ }),
@@ -20256,6 +20411,45 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./resources/js/components/AcceptFriendshipBtn.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/AcceptFriendshipBtn.vue ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AcceptFriendshipBtn_vue_vue_type_template_id_de595a42_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true& */ "./resources/js/components/AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true&");
+/* harmony import */ var _AcceptFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AcceptFriendshipBtn.vue?vue&type=script&lang=js& */ "./resources/js/components/AcceptFriendshipBtn.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AcceptFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AcceptFriendshipBtn_vue_vue_type_template_id_de595a42_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _AcceptFriendshipBtn_vue_vue_type_template_id_de595a42_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "de595a42",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AcceptFriendshipBtn.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/LikeButton.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/LikeButton.vue ***!
@@ -20293,6 +20487,45 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/LikeButton.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/RequestFriendshipBtn.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/RequestFriendshipBtn.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _RequestFriendshipBtn_vue_vue_type_template_id_88c3f184_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true& */ "./resources/js/components/RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true&");
+/* harmony import */ var _RequestFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RequestFriendshipBtn.vue?vue&type=script&lang=js& */ "./resources/js/components/RequestFriendshipBtn.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RequestFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RequestFriendshipBtn_vue_vue_type_template_id_88c3f184_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _RequestFriendshipBtn_vue_vue_type_template_id_88c3f184_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "88c3f184",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/RequestFriendshipBtn.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -20414,6 +20647,22 @@ component.options.__file = "resources/js/components/StatusListItem.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/AcceptFriendshipBtn.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/AcceptFriendshipBtn.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AcceptFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AcceptFriendshipBtn.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AcceptFriendshipBtn.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AcceptFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/LikeButton.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/LikeButton.vue?vue&type=script&lang=js& ***!
@@ -20427,6 +20676,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LikeButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LikeButton.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/RequestFriendshipBtn.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/RequestFriendshipBtn.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RequestFriendshipBtn.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestFriendshipBtn.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestFriendshipBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -20491,6 +20756,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true& ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AcceptFriendshipBtn_vue_vue_type_template_id_de595a42_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AcceptFriendshipBtn_vue_vue_type_template_id_de595a42_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AcceptFriendshipBtn_vue_vue_type_template_id_de595a42_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/LikeButton.vue?vue&type=template&id=2a9c25d4&scoped=true&":
 /*!*******************************************************************************************!*\
   !*** ./resources/js/components/LikeButton.vue?vue&type=template&id=2a9c25d4&scoped=true& ***!
@@ -20504,6 +20786,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButton_vue_vue_type_template_id_2a9c25d4_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LikeButton_vue_vue_type_template_id_2a9c25d4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./LikeButton.vue?vue&type=template&id=2a9c25d4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LikeButton.vue?vue&type=template&id=2a9c25d4&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true& ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestFriendshipBtn_vue_vue_type_template_id_88c3f184_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestFriendshipBtn_vue_vue_type_template_id_88c3f184_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RequestFriendshipBtn_vue_vue_type_template_id_88c3f184_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true&");
 
 
 /***/ }),
@@ -20559,6 +20858,76 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AcceptFriendshipBtn.vue?vue&type=template&id=de595a42&scoped=true& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.localFriendshipStatus === "pending"
+      ? _c("div", [
+          _c("span", { domProps: { textContent: _vm._s(_vm.sender.name) } }),
+          _vm._v(" has sent you a friend request\n        "),
+          _c(
+            "button",
+            {
+              attrs: { dusk: "accept-friendship" },
+              on: { click: _vm.acceptFriendshipRequest },
+            },
+            [_vm._v("Accept Request")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              attrs: { dusk: "deny-friendship" },
+              on: { click: _vm.denyFriendshipRequest },
+            },
+            [_vm._v("Deny Request")]
+          ),
+        ])
+      : _vm.localFriendshipStatus === "accepted"
+      ? _c("div", [
+          _c("span", { domProps: { textContent: _vm._s(_vm.sender.name) } }),
+          _vm._v(" is your friend\n    "),
+        ])
+      : _vm.localFriendshipStatus === "denied"
+      ? _c("div", [
+          _c("span", { domProps: { textContent: _vm._s(_vm.sender.name) } }),
+          _vm._v(" request denied\n    "),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.localFriendshipStatus === "deleted"
+      ? _c("div", [_vm._v("Request deleted")])
+      : _c(
+          "button",
+          {
+            attrs: { dusk: "delete-friendship" },
+            on: { click: _vm.deleteFriendship },
+          },
+          [_vm._v("Delete friendship")]
+        ),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LikeButton.vue?vue&type=template&id=2a9c25d4&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/LikeButton.vue?vue&type=template&id=2a9c25d4&scoped=true& ***!
@@ -20589,6 +20958,42 @@ var render = function () {
       _c("i", { class: _vm.getIconClasses }),
       _vm._v("\n    " + _vm._s(_vm.getText) + "\n"),
     ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/RequestFriendshipBtn.vue?vue&type=template&id=88c3f184&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      staticClass: "btn btn-primary",
+      on: {
+        click: function ($event) {
+          return _vm.toggleFriendshipRequest()
+        },
+      },
+    },
+    [_vm._v("\n    " + _vm._s(_vm.getText) + "\n")]
   )
 }
 var staticRenderFns = []
@@ -20749,15 +21154,15 @@ var render = function () {
           attrs: {
             width: "40px",
             src: _vm.status.user.user_avatar,
-            alt: _vm.status.user.name,
+            alt: _vm.status.user.user_name,
           },
         }),
         _vm._v(" "),
         _c("div", [
           _c("h5", { staticClass: "mb-1" }, [
             _c("a", {
-              attrs: { href: _vm.status.user.link },
-              domProps: { textContent: _vm._s(_vm.status.user.name) },
+              attrs: { href: _vm.status.user.user_link },
+              domProps: { textContent: _vm._s(_vm.status.user.user_name) },
             }),
           ]),
           _vm._v(" "),

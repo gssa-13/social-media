@@ -17,7 +17,7 @@ class CreateFriendshipsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('recipient_id');
-            $table->enum('status', [0,1,2])->default(2)->comment('0:Denied; 1: Accepted; 2: Pending');
+            $table->enum('status', ['denied','accepted','pending'])->default('pending');
             $table->timestamps();
         });
     }

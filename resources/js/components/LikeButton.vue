@@ -50,8 +50,8 @@ export default {
         },
         getIconClasses() {
             return [
-                this.model.is_liked ? 'fas ' : 'far ',
-                'fa-thumbs-up mr-1'
+                this.model.is_liked ? 'fas' : 'far',
+                ' fa-thumbs-up mr-1'
             ]
         }
     }

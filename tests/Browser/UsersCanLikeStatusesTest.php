@@ -23,15 +23,15 @@ class UsersCanLikeStatusesTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($user, $status) {
             $browser->loginAs($user)->visit('/')
-                ->waitForText($status->body)
+                ->waitForText($status->body, 7)
                 ->assertSeeIn('@likes-count',0)
                 ->press('@like-btn')
-                ->waitForText('You Like')
+                ->waitForText('You Like', 7)
                 ->assertSee('You Like')
                 ->assertSeeIn('@likes-count',1)
 
                 ->press('@like-btn')
-                ->waitForText('Like')
+                ->waitForText('Like', 7)
                 ->assertSee('Like')
                 ->assertSeeIn('@likes-count',0)
             ;
@@ -49,7 +49,7 @@ class UsersCanLikeStatusesTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($status) {
             $browser->visit('/')
-                ->waitForText($status->body)
+                ->waitForText($status->body, 7)
                 ->press('@like-btn')
                 ->assertPathIs('/login')
             ;

@@ -53,10 +53,17 @@ Route::get('users/{user}/statuses', [UserStatusController::class, 'index'])->nam
 // route for Users \\
 
 // route for Friendships \\
-Route::post('/friendships/{recipient}', [FriendshipsController::class, 'store'])->name('friendships.store')->middleware('auth');
-Route::delete('/friendships/{recipient}', [FriendshipsController::class, 'destroy'])->name('friendships.destroy')->middleware('auth');
-Route::post('/accept-friendships/{sender}', [AcceptFriendshipsController::class, 'store'])->name('accept-friendships.store')->middleware('auth');
-Route::delete('/accept-friendships/{sender}', [AcceptFriendshipsController::class, 'destroy'])->name('accept-friendships.destroy')->middleware('auth');
+Route::post('/friendships/{recipient}', [FriendshipsController::class, 'store'])
+    ->name('friendships.store')->middleware('auth');
+Route::delete('/friendships/{user}', [FriendshipsController::class, 'destroy'])
+    ->name('friendships.destroy')->middleware('auth');
+
+Route::get('/accept-friendships', [AcceptFriendshipsController::class, 'index'])
+    ->name('accept-friendships.index');
+Route::post('/accept-friendships/{sender}', [AcceptFriendshipsController::class, 'store'])
+    ->name('accept-friendships.store')->middleware('auth');
+Route::delete('/accept-friendships/{sender}', [AcceptFriendshipsController::class, 'destroy'])
+    ->name('accept-friendships.destroy')->middleware('auth');
 // route for Friendships \\
 
 
