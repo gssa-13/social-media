@@ -12,11 +12,7 @@ class CanRequestFriendshipTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function authenticated_user_can_send_friendship_request()
     {
         $this->withoutExceptionHandling();
@@ -41,11 +37,7 @@ class CanRequestFriendshipTest extends TestCase
         $this->assertCount(1, Friendship::all());
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function authenticated_user_can_accept_friendship_request()
     {
         $this->withoutExceptionHandling();
@@ -73,11 +65,7 @@ class CanRequestFriendshipTest extends TestCase
         ));
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function senders_can_delete_sent_friendship_request()
     {
         $this->withoutExceptionHandling();
@@ -103,11 +91,7 @@ class CanRequestFriendshipTest extends TestCase
         ));
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test  */
     public function senders_cannot_delete_denied_friendship_request()
     {
         $sender = User::factory()->create();
@@ -133,11 +117,7 @@ class CanRequestFriendshipTest extends TestCase
         ));
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function recipients_can_delete_received_friendship_request()
     {
         $this->withoutExceptionHandling();
@@ -163,11 +143,7 @@ class CanRequestFriendshipTest extends TestCase
         ));
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function user_can_deny_a_friendship_request()
     {
         $this->withoutExceptionHandling();
@@ -195,11 +171,7 @@ class CanRequestFriendshipTest extends TestCase
         ));
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function guest_users_cannot_create_friendship_request()
     {
         $recipient = User::factory()->create();
@@ -209,11 +181,7 @@ class CanRequestFriendshipTest extends TestCase
         $response->assertStatus(401);
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function guest_users_cannot_delete_friendship_request()
     {
         $recipient = User::factory()->create();
@@ -223,25 +191,19 @@ class CanRequestFriendshipTest extends TestCase
         $response->assertStatus(401);
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function guest_users_cannot_accept_friendship_request()
     {
         $user = User::factory()->create();
 
-        $response = $this->postJson( route('accept-friendships.store', $user) );
+        $this->postJson( route('accept-friendships.store', $user) )
+            ->assertStatus(401);
 
-        $response->assertStatus(401);
+        $this->get( route('accept-friendships.index') )
+            ->assertRedirect('login');
     }
 
-    /**
-     * @test
-     *
-     * @throws \Throwable
-     */
+    /** @test */
     public function guest_users_cannot_deny_friendship_request()
     {
         $user = User::factory()->create();
@@ -249,5 +211,20 @@ class CanRequestFriendshipTest extends TestCase
         $response = $this->deleteJson( route('accept-friendships.destroy', $user) );
 
         $response->assertStatus(401);
+    }
+
+    /** @test */
+    public function a_user_cannot_send_friend_request_to_itself()
+    {
+        $sender = User::factory()->create();
+
+        $this->actingAs($sender)->postJson( route('friendships.store', $sender) );
+
+        $this->assertDatabaseMissing('friendships', [
+            'sender_id' => $sender->id,
+            'recipient_id' => $sender->id,
+            'status' => 'pending'
+        ]);
+
     }
 }

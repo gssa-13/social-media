@@ -2236,6 +2236,7 @@ __webpack_require__.r(__webpack_exports__);
     toggleFriendshipRequest: function toggleFriendshipRequest() {
       var _this = this;
 
+      this.redirectIfIsAGuest();
       var method = this.getMethod();
       axios[method]("/friendships/".concat(this.recipient.name)).then(function (response) {
         _this.localFriendshipStatus = response.data.friendship_status;
@@ -21113,7 +21114,13 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { on: { click: _vm.redirectIfIsAGuest } },
+    {
+      on: {
+        click: function ($event) {
+          return _vm.redirectIfIsAGuest()
+        },
+      },
+    },
     _vm._l(_vm.statuses, function (status) {
       return _c("status-list-item", {
         key: status.id,

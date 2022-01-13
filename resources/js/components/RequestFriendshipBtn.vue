@@ -25,6 +25,8 @@ export default {
     },
     methods: {
         toggleFriendshipRequest() {
+            this.redirectIfIsAGuest();
+
             let method = this.getMethod();
 
             axios[method](`/friendships/${this.recipient.name}`)

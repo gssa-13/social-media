@@ -1,5 +1,5 @@
 <template>
-    <div @click="redirectIfIsAGuest">
+    <div @click="redirectIfIsAGuest()">
         <status-list-item v-for="status in statuses" :status="status" :key="status.id"/>
     </div>
 </template>

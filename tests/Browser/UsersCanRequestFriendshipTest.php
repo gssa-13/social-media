@@ -179,4 +179,38 @@ class UsersCanRequestFriendshipTest extends DuskTestCase
             ;
         });
     }
+
+    /**
+     * @test
+     *
+     * @throws \Throwable
+     */
+    public function a_user_cannot_send_friend_request_to_it_self()
+    {
+        $user = User::factory()->create();
+
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
+                ->visit( route('users.show', $user) )
+                ->assertMissing('@request-friendship')
+            ;
+        });
+    }
+
+    /**
+     * @test
+     *
+     * @throws \Throwable
+     */
+    public function guest_users_cannot_create_friendship_requests()
+    {
+        $recipient = User::factory()->create();
+
+        $this->browse(function (Browser $browser) use ($recipient) {
+            $browser->visit( route('users.show', $recipient) )
+                ->press('@request-friendship')
+                ->assertPathIs('/login')
+            ;
+        });
+    }
 }
