@@ -1,6 +1,9 @@
 <template>
-    <div @click="redirectIfIsAGuest()">
-        <status-list-item v-for="status in statuses" :status="status" :key="status.id"/>
+    <div @click="redirectIfIsAGuest">
+        <status-list-item
+            v-for="status in statuses"
+            :status="status"
+            :key="status.id"/>
     </div>
 </template>
 
@@ -8,11 +11,9 @@
 import StatusListItem from "./StatusListItem";
 
 export default {
-    components:{
-        StatusListItem
-    },
+    components: { StatusListItem },
     props: {
-        url : String
+        url: String
     },
     data() {
         return {
@@ -27,16 +28,20 @@ export default {
         .catch(errors => {
             console.log(errors.response.data)
         });
+
         EventBus.$on('status-created', status => {
+            this.statuses.unshift(status);
+        });
+
+        Echo.channel('statuses').listen('StatusCreated', ({status}) => {
             this.statuses.unshift(status);
         });
     },
     computed: {
         getUrl () {
-            return this.url ? this.url : 'statuses';
+            return this.url ? this.url : '/statuses';
         }
     }
-
 }
 </script>
 
