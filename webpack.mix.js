@@ -15,8 +15,10 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .vue();
 
+mix.disableNotifications();
+
 mix.browserSync({
-    proxy: 'http://localhost/',
+    proxy: 'http://social.local',
     open: false
 });
 
