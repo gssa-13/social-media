@@ -13,7 +13,10 @@ class UserCanCommentStatusTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    /** @test */
+    /**
+     * @test
+     * @throws \Throwable
+     */
     public function authenticated_users_can_comment_statuses()
     {
         $status = Status::factory()->create();
@@ -31,7 +34,10 @@ class UserCanCommentStatusTest extends DuskTestCase
         });
     }
 
-    /** @test */
+    /**
+     * @test
+     * @throws \Throwable
+     */
     public function users_can_see_all_comments()
     {
         $status = Status::factory()->create();
@@ -46,7 +52,31 @@ class UserCanCommentStatusTest extends DuskTestCase
                 }
             ;
         });
+    }
 
+    /**
+     * @test
+     * @throws \Throwable
+     */
+    public function users_can_see_comments_in_real_time()
+    {
+        $status = Status::factory()->create();
+        $user = User::factory()->create();
 
+        $this->browse(function (Browser $browser1, Browser $browser2) use ($status, $user) {
+            $comment = 'My first comment';
+
+            $browser1->visit('/');
+
+            $browser2->loginAs($user)
+                ->visit('/')
+                ->waitForText($status->body)
+                ->type('comment', $comment)
+                ->press('@comment-btn')
+            ;
+
+            $browser1->waitForText($comment)
+                ->assertSee($comment);
+        });
     }
 }
