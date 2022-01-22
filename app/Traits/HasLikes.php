@@ -2,8 +2,12 @@
 
 namespace App\Traits;
 
-use App\Models\Like;
+use App\Events\ModelUnliked;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
+use App\Models\Like;
+use App\Events\ModelLiked;
 
 trait HasLikes
 {
@@ -17,11 +21,17 @@ trait HasLikes
         $this->likes()->firstOrCreate([
             'user_id' => Auth::id()
         ]);
+
+        ModelLiked::dispatch($this);
     }
 
     public function unlike()
     {
-        $this->likes()->where([ 'user_id' => Auth::id() ])->delete();
+        $this->likes()
+            ->where([ 'user_id' => Auth::id() ])
+            ->delete();
+
+        ModelUnliked::dispatch($this);
     }
 
     public function isLiked()
@@ -32,5 +42,10 @@ trait HasLikes
     public function likesCount()
     {
         return $this->likes()->count();
+    }
+
+    public function eventChannelName()
+    {
+        return Str::lower( Str::plural ( class_basename($this) ) ).".".$this->getKey().".likes";
     }
 }

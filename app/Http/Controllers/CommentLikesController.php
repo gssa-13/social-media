@@ -36,9 +36,7 @@ class CommentLikesController extends Controller
      */
     public function store(Comment $comment, Request $request)
     {
-        $comment->likes()->create([
-            'user_id' => Auth::id()
-        ]);
+        $comment->like();
     }
 
     /**
@@ -83,8 +81,6 @@ class CommentLikesController extends Controller
      */
     public function destroy( Comment $comment)
     {
-        $comment->likes()->where([
-            'user_id' => Auth::id()
-        ])->delete();
+        $comment->unlike();
     }
 }

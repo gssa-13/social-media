@@ -46,6 +46,17 @@ export default {
         LikeButton,
         CommentList,
         CommentForm
+    },
+    mounted() {
+        Echo.channel(`statuses.${this.status.id}.likes`)
+            .listen('ModelLiked', e => {
+                this.status.likes_count++;
+            });
+
+        Echo.channel(`statuses.${this.status.id}.likes`)
+            .listen('ModelUnliked', e => {
+                this.status.likes_count--;
+            });
     }
 }
 </script>

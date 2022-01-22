@@ -1,0 +1,51 @@
+<template>
+    <div class="d-flex">
+        <img :src="comment.user.user_avatar" :alt="comment.user.name"
+            width="30px" height="30px" class="rounded shadow-sm mr-2">
+        <div class="flex-grow-1">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-2 text-secondary">
+                    <a :href="comment.user.link">{{ comment.user.name }}</a>
+                    {{ comment.body }}
+                </div>
+            </div>
+
+            <small dusk="comment-likes-count"
+                   class="float-right badge badge-primary py-1 px-2 mt-1" >
+                <i class="fas fa-thumbs-up mr-1"></i>
+                {{ comment.likes_count }}
+            </small>
+
+            <like-button
+                dusk="comment-like-btn"
+                :url="`/comments/${comment.id}/likes`"
+                :model="comment"
+                class="comments-like-btn"
+            />
+        </div>
+    </div>
+</template>
+
+<script>
+    import LikeButton from "./LikeButton";
+
+    export default {
+        components: { LikeButton },
+        props: {
+            comment: {
+                type: Object,
+                required: true
+            }
+        },
+        mounted() {
+            Echo.channel(`comments.${this.comment.id}.likes`)
+                .listen('ModelLiked', comment => {
+                    this.comment.likes_count++;
+                });
+            Echo.channel(`comments.${this.comment.id}.likes`)
+                .listen('ModelUnliked', comment => {
+                    this.comment.likes_count--;
+                });
+        }
+    }
+</script>
