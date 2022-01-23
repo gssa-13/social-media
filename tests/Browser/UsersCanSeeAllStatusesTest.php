@@ -2,10 +2,11 @@
 
 namespace Tests\Browser;
 
-use App\Models\Status;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
+
+use App\Models\Status;
 
 class UsersCanSeeAllStatusesTest extends DuskTestCase
 {

@@ -2,11 +2,13 @@
 
 namespace Tests\Browser;
 
-use App\Models\Comment;
-use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
+
+use App\Models\User;
+use App\Models\Comment;
+
 
 class UserCanLikeCommentsTest extends DuskTestCase
 {
@@ -33,6 +35,7 @@ class UserCanLikeCommentsTest extends DuskTestCase
                 ->press('@comment-like-btn')
                 ->waitForText('Like')
                 ->assertSee('Like')
+                ->pause(2000)
                 ->assertSeeIn('@comment-likes-count',0)
             ;
         });
@@ -62,7 +65,7 @@ class UserCanLikeCommentsTest extends DuskTestCase
             $browser2->press('@comment-like-btn')
                 ->waitForText('Like');
 
-            $browser1->pause(1000)
+            $browser1->pause(2000)
                 ->assertSeeIn('@comment-likes-count', 0);
         });
     }
