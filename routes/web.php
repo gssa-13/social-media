@@ -10,9 +10,11 @@ use App\Http\Controllers\FriendshipsController;
 use App\Http\Controllers\CommentLikesController;
 use App\Http\Controllers\StatusCommentsController;
 use App\Http\Controllers\AcceptFriendshipsController;
+use App\Http\Controllers\NotificationsController as Notifications;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController as Auth;
 use App\Http\Controllers\Auth\RegisterController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -80,3 +82,8 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name(
 
 Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
 /// login \\\
+
+
+/// Notifications \\\
+Route::get('/notifications', [ Notifications::class, 'index'] )->name('notifications.index')->middleware('auth');
+/// Notifications \\\

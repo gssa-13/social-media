@@ -30,6 +30,6 @@ class NewLikeNotificationTest extends TestCase
         $notificationsData = $statusOwner->notifications->first()->data;
 
         $this->assertEquals($status->path(), $notificationsData['link']);
-        $this->assertEquals("User {$likeSender->name} liked yout post", $notificationsData['message']);
+        $this->assertEquals("User {$likeSender->name} liked your post", $notificationsData['message']);
     }
 }
