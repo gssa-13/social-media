@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
+
 use App\Models\Comment;
 use App\Models\Status;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 
 class CanLikeCommentTest extends TestCase
 {
@@ -24,6 +25,8 @@ class CanLikeCommentTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_like_comments()
     {
+        Notification::fake();
+
         $this->withoutExceptionHandling();
 
         $user = User::factory()->create();
@@ -41,6 +44,8 @@ class CanLikeCommentTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_unlike_comments()
     {
+        Notification::fake();
+
         $this->withoutExceptionHandling();
 
         $user = User::factory()->create();

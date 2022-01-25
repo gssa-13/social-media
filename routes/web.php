@@ -25,6 +25,9 @@ Route::post('/statuses', [StatusController::class, 'store'])
 Route::get('/statuses', [StatusController::class, 'index'])
     ->name('statuses.index');
 
+Route::get('/statuses/{status}', [StatusController::class, 'show'])
+    ->name('statuses.show');
+
 // route for likes \\
 Route::post('/statuses/{status}/likes', [StatusLikeController::class, 'store'])
     ->name('statuses.like.store')->middleware('auth');

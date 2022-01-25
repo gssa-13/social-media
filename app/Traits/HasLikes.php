@@ -22,7 +22,7 @@ trait HasLikes
             'user_id' => Auth::id()
         ]);
 
-        ModelLiked::dispatch($this);
+        ModelLiked::dispatch($this, Auth::user());
     }
 
     public function unlike()

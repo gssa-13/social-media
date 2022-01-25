@@ -11,14 +11,19 @@ class NewLikeNotification extends Notification
 {
     use Queueable;
 
+    public $model;
+    public $likeSender;
+
     /**
      * Create a new notification instance.
-     *
+     * @param $model
+     * @param $likeSender
      * @return void
      */
-    public function __construct()
+    public function __construct($model, $likeSender)
     {
-        //
+        $this->model = $model;
+        $this->likeSender = $likeSender;
     }
 
     /**
@@ -29,7 +34,7 @@ class NewLikeNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [];
+        return ['database'];
     }
 
     /**
@@ -55,7 +60,8 @@ class NewLikeNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'link' => $this->model->path(),
+            'message' => "User {$this->likeSender->name} liked yout post"
         ];
     }
 }
