@@ -8,9 +8,10 @@ use App\Http\Controllers\StatusLikeController;
 use App\Http\Controllers\UserStatusController;
 use App\Http\Controllers\FriendshipsController;
 use App\Http\Controllers\CommentLikesController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\StatusCommentsController;
 use App\Http\Controllers\AcceptFriendshipsController;
-use App\Http\Controllers\NotificationsController as Notifications;
+use App\Http\Controllers\ReadNotificationsController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController as Auth;
 use App\Http\Controllers\Auth\RegisterController;
@@ -85,5 +86,8 @@ Route::get('/register', [RegisterController::class, 'create'])->middleware('gues
 
 
 /// Notifications \\\
-Route::get('/notifications', [ Notifications::class, 'index'] )->name('notifications.index')->middleware('auth');
+Route::get('/notifications', NotificationsController::class )->name('notifications.index')->middleware('auth');
+Route::post('/read-notifications/{notification}', [ReadNotificationsController::class, 'store'])->name('read-notifications.store')->middleware('auth');
+Route::delete('/read-notifications/{notification}', [ReadNotificationsController::class, 'destroy'])->name('read-notifications.destroy')->middleware('auth');
+
 /// Notifications \\\
