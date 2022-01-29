@@ -9,7 +9,7 @@
            class="nav-link dropdown-toggle"
            id="dropdownNotifications">
             <i class="fas fa-bell"></i>
-            {{ count }}
+            <span dusk="notifications-count">{{ count }}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownNotifications">
             <div class="dropdown-header">Notifications</div>

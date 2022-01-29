@@ -28168,7 +28168,10 @@ var render = function () {
       },
       [
         _c("i", { staticClass: "fas fa-bell" }),
-        _vm._v("\n        " + _vm._s(_vm.count) + "\n    "),
+        _vm._v(" "),
+        _c("span", { attrs: { dusk: "notifications-count" } }, [
+          _vm._v(_vm._s(_vm.count)),
+        ]),
       ]
     ),
     _vm._v(" "),

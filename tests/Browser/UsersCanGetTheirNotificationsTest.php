@@ -47,4 +47,25 @@ class UsersCanGetTheirNotificationsTest extends DuskTestCase
             ;
         });
     }
+
+    /**
+     * @test
+     * @throws \Throwable
+     */
+    public function users_can_see_their_notifications_in_real_time()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $status = Status::factory()->create(['user_id' => $user1->id]);
+
+        $this->browse(function (Browser $browser1, Browser $browser2) use ($user1, $user2, $status) {
+            $browser1->loginAs($user1)->visit('/');
+
+            $browser2->loginAs($user2)->visit('/')->press('@like-btn')
+                ->pause(1000);
+
+            $browser1->assertSeeIn('@notifications-count', 1);
+        });
+    }
 }
