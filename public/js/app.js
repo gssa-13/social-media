@@ -2423,6 +2423,22 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
+    // Channel: private-App.Models.User.1,
+    // Event: Illuminate\Notifications\Events\BroadcastNotificationCreated
+    if (this.userIsAuthenticated) {
+      Echo["private"]("App.Models.User.".concat(this.userAuthenticated.id)).notification(function (notification) {
+        _this.count++;
+
+        _this.notifications.push({
+          id: notification.id,
+          data: {
+            link: notification.link,
+            message: notification.message
+          }
+        });
+      });
+    }
+
     axios.get('/notifications').then(function (response) {
       _this.notifications = response.data;
 

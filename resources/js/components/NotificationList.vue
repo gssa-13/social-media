@@ -31,6 +31,23 @@ export default {
         }
     },
     created() {
+        // Channel: private-App.Models.User.1,
+        // Event: Illuminate\Notifications\Events\BroadcastNotificationCreated
+
+        if (this.userIsAuthenticated) {
+            Echo.private(`App.Models.User.${this.userAuthenticated.id}`)
+            .notification(notification => {
+                this.count++;
+                this.notifications.push({
+                    id: notification.id,
+                    data: {
+                        link: notification.link,
+                        message: notification.message
+                    }
+                });
+            });
+        }
+
         axios.get('/notifications')
         .then( response => {
             this.notifications = response.data;
