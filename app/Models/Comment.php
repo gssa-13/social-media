@@ -23,4 +23,8 @@ class Comment extends Model
         return $this->morphMany(Like::class, 'likeable');
     }
 
+    public function path()
+    {
+        // TODO: Implement path() method.
+    }
 }
