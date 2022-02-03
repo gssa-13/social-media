@@ -16,20 +16,9 @@ class AcceptFriendshipsController extends Controller
      */
     public function index()
     {
-        $friendshipRequests = Friendship::with('sender')
-            ->where('recipient_id', Auth::id())->get();
-
-        return view('friendships.index', compact('friendshipRequests'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('friendships.index', [
+            'friendshipRequests' => Auth::user()->friendshipRequestsReceived
+        ]);
     }
 
     /**
@@ -40,48 +29,11 @@ class AcceptFriendshipsController extends Controller
      */
     public function store(User $sender)
     {
-        Friendship::where([
-            'sender_id' => $sender->id,
-            'recipient_id' =>  Auth::id(),
-        ])->update([ 'status' => 'accepted' ]);
+        Auth::user()->acceptFriendRequestFrom($sender);
 
         return response()->json([
             'friendship_status' => 'accepted'
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -92,10 +44,7 @@ class AcceptFriendshipsController extends Controller
      */
     public function destroy(User $sender)
     {
-        Friendship::where([
-            'sender_id' => $sender->id,
-            'recipient_id' =>  Auth::id(),
-        ])->update([ 'status' => 'denied' ]);
+        Auth::user()->denyFriendRequestFrom($sender);
 
         return response()->json([
             'friendship_status' => 'denied'
