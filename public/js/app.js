@@ -2083,6 +2083,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     sender: {
@@ -27925,52 +27940,91 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.localFriendshipStatus === "pending"
-      ? _c("div", [
-          _c("span", { domProps: { textContent: _vm._s(_vm.sender.name) } }),
-          _vm._v(" has sent you a friend request\n        "),
-          _c(
-            "button",
-            {
-              attrs: { dusk: "accept-friendship" },
-              on: { click: _vm.acceptFriendshipRequest },
-            },
-            [_vm._v("Accept Request")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              attrs: { dusk: "deny-friendship" },
-              on: { click: _vm.denyFriendshipRequest },
-            },
-            [_vm._v("Deny Request")]
-          ),
-        ])
-      : _vm.localFriendshipStatus === "accepted"
-      ? _c("div", [
-          _c("span", { domProps: { textContent: _vm._s(_vm.sender.name) } }),
-          _vm._v(" is your friend\n    "),
-        ])
-      : _vm.localFriendshipStatus === "denied"
-      ? _c("div", [
-          _c("span", { domProps: { textContent: _vm._s(_vm.sender.name) } }),
-          _vm._v(" request denied\n    "),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.localFriendshipStatus === "deleted"
-      ? _c("div", [_vm._v("Request deleted")])
-      : _c(
-          "button",
-          {
-            attrs: { dusk: "delete-friendship" },
-            on: { click: _vm.deleteFriendship },
-          },
-          [_vm._v("Delete friendship")]
-        ),
-  ])
+  return _c(
+    "div",
+    {
+      staticClass:
+        "d-flex justify-content-between bg-light p3 rounded mb-3 shadow-sm",
+    },
+    [
+      _c("div", [
+        _vm.localFriendshipStatus === "pending"
+          ? _c("div", [
+              _c("span", {
+                domProps: { textContent: _vm._s(_vm.sender.name) },
+              }),
+              _vm._v(" has sent you a friend request\n        "),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.localFriendshipStatus === "accepted"
+          ? _c("div", [
+              _c("span", {
+                domProps: { textContent: _vm._s(_vm.sender.name) },
+              }),
+              _vm._v(" is your friend\n        "),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.localFriendshipStatus === "denied"
+          ? _c("div", [
+              _c("span", {
+                domProps: { textContent: _vm._s(_vm.sender.name) },
+              }),
+              _vm._v(" request denied\n        "),
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.localFriendshipStatus === "deleted"
+          ? _c("div", [
+              _vm._v("\n            Request from "),
+              _c("span", {
+                domProps: { textContent: _vm._s(_vm.sender.name) },
+              }),
+              _vm._v(" is deleted\n        "),
+            ])
+          : _vm._e(),
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _vm.localFriendshipStatus === "pending"
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-primary",
+                attrs: { dusk: "accept-friendship" },
+                on: { click: _vm.acceptFriendshipRequest },
+              },
+              [_vm._v("\n            Accept Request\n        ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.localFriendshipStatus === "pending"
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-warning",
+                attrs: { dusk: "deny-friendship" },
+                on: { click: _vm.denyFriendshipRequest },
+              },
+              [_vm._v("\n            Deny Request\n        ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.localFriendshipStatus !== "deleted"
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-danger",
+                attrs: { dusk: "delete-friendship" },
+                on: { click: _vm.deleteFriendship },
+              },
+              [_vm._v("\n            Delete friendship\n        ")]
+            )
+          : _vm._e(),
+      ]),
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

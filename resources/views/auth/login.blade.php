@@ -10,7 +10,10 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
-                                <input class="form-control border-0" type="email" name="email" id="email" placeholder="email">
+                                <input class="form-control border-0"
+                                       type="email" name="email"
+                                       id="email" placeholder="email"
+                                       value="{{ old('email') }}">
                             </div>
                             <div class="form-group">
                                 <input class="form-control border-0" type="password" name="password" id="password" placeholder="Password">

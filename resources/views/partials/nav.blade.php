@@ -6,23 +6,24 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-            </ul>
             <ul class="navbar-nav ml-auto">
                 @guest()
                     <li class="nav-item">
-                        <a href="{{ route('login') }}" class="nav-link">Login</a>
+                        <a href="{{ route('login') }}" class="nav-link">
+                            Login
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('register') }}" class="nav-link">Register</a>
+                        <a href="{{ route('register') }}" class="nav-link">
+                            Register
+                        </a>
                     </li>
                 @else
+                    <li class="nav-item">
+                        <a href="{{ route('accept-friendships.index') }}" class="nav-link">
+                            Friend Requests
+                        </a>
+                    </li>
                     <notification-list></notification-list>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
