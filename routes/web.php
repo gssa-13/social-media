@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StatusController;
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\StatusLikeController;
 use App\Http\Controllers\UserStatusController;
 use App\Http\Controllers\FriendshipsController;
@@ -70,6 +71,8 @@ Route::post('/accept-friendships/{sender}', [AcceptFriendshipsController::class,
     ->name('accept-friendships.store')->middleware('auth');
 Route::delete('/accept-friendships/{sender}', [AcceptFriendshipsController::class, 'destroy'])
     ->name('accept-friendships.destroy')->middleware('auth');
+
+Route::get('/friends', FriendsController::class)->name('friends.index')->middleware('auth');
 // route for Friendships \\
 
 

@@ -20,6 +20,11 @@
                     </li>
                 @else
                     <li class="nav-item">
+                        <a href="{{ route('friends.index') }}" class="nav-link">
+                            Friends
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('accept-friendships.index') }}" class="nav-link">
                             Friend Requests
                         </a>
