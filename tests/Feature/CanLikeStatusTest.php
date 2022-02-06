@@ -20,7 +20,9 @@ class CanLikeStatusTest extends TestCase
 
         $this->assertCount(0, $status->likes);
 
-        $this->actingAs($user)->postJson( route('statuses.like.store', $status) );
+        $response = $this->actingAs($user)->postJson( route('statuses.like.store', $status) );
+
+        $response->assertJsonFragment([ 'likes_count' => 1 ]);
 
         $this->assertCount(1, $status->fresh()->likes);
 
@@ -50,7 +52,9 @@ class CanLikeStatusTest extends TestCase
 
         $this->assertDatabaseHas('likes', [ 'user_id' => $user->id ]);
 
-        $this->actingAs($user)->deleteJson( route('statuses.like.destroy', $status) );
+        $response = $this->actingAs($user)->deleteJson( route('statuses.like.destroy', $status) );
+
+        $response->assertJsonFragment([ 'likes_count' => 0 ]);
 
         $this->assertCount(0, $status->fresh()->likes);
 
