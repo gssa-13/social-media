@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FriendshipsController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *
@@ -26,6 +25,21 @@ class FriendshipsController extends Controller
 
         return response()->json([
             'friendship_status' => $friendship->fresh()->status
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, User $recipient)
+    {
+        $friendship = Friendship::betweenUsers(Auth::user(), $recipient)->first();
+
+        return response()->json([
+            'friendship_status' => $friendship->status
         ]);
     }
 

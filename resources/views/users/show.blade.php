@@ -4,20 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div class="card border-0 bg-light shadow-sm">
-                    <img src="{{ $user->avatar }}" alt="{{ $user->name }}">
-                    <div class="card-body">
-                        @if(Auth::id() === $user->id)
-                            <div class="card-title">{{ $user->name  }}</div>
-                        @else
-                            <div class="card-title">{{ $user->name  }}</div>
-                            <request-friendship-btn
-                                dusk="request-friendship"
-                                friendship-status="{{ $friendshipStatus }}"
-                                :recipient="{{ $user }}"/>
-                        @endif
-                    </div>
-                </div>
+                @include('partials.user')
             </div>
             <div class="col-md-9">
                 <div class="card border-0 bg-light shadow-sm">

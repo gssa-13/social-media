@@ -12,16 +12,19 @@ export default {
         recipient: {
             type: Object,
             required: true
-        },
-        friendshipStatus: {
-            type: String,
-            required: true
         }
     },
-    data() {
-        return {
-            localFriendshipStatus: this.friendshipStatus
-        }
+    data: () => ({
+        friendshipStatus: ''
+    }),
+    created() {
+        axios.get(`/friendships/${this.recipient.name}`)
+        .then(response => {
+            this.friendshipStatus = response.data.friendship_status;
+        })
+        .catch(errors => {
+            console.log(errors.data)
+        });
     },
     methods: {
         toggleFriendshipRequest() {
@@ -31,14 +34,14 @@ export default {
 
             axios[method](`/friendships/${this.recipient.name}`)
             .then(response => {
-                this.localFriendshipStatus = response.data.friendship_status;
+                this.friendshipStatus = response.data.friendship_status;
             })
             .catch(error => {
                 console.log(error.response.data);
             });
         },
         getMethod() {
-            if (this.localFriendshipStatus === 'pending' || this.localFriendshipStatus === 'accepted') {
+            if (this.friendshipStatus === 'pending' || this.friendshipStatus === 'accepted') {
                 return 'delete';
             }
             return 'post';
@@ -46,13 +49,13 @@ export default {
     },
     computed: {
         getText() {
-            if (this.localFriendshipStatus === 'pending') {
+            if (this.friendshipStatus === 'pending') {
                 return 'Cancel request';
             }
-            if (this.localFriendshipStatus === 'accepted') {
+            if (this.friendshipStatus === 'accepted') {
                 return 'Remove from my friends';
             }
-            if (this.localFriendshipStatus === 'denied') {
+            if (this.friendshipStatus === 'denied') {
                 return 'Request denied';
             }
             return 'Send friend request';
